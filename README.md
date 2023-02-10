@@ -29,4 +29,5 @@
 # cd to where manage.py resides and: "gcloud app deploy"
 
 # generate service account key: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
+# add file gcp-service-account-key.json with the generated stuff
 
