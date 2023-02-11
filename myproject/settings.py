@@ -77,7 +77,7 @@ if APPENGINE_URL:
 
 else:
     CSRF_TRUSTED_ORIGINS = [
-        'https://8000-cs-570532252862-default.cs-europe-west4-fycr.cloudshell.dev'
+        'https://8000-cs-570532252862-default.cs-europe-west4-bhnf.cloudshell.dev'
     ]
     ALLOWED_HOSTS = [
         '127.0.0.1',
