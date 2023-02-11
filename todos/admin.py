@@ -46,7 +46,7 @@ class TODOListAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            'all': ('/static/css/todos_admin.css',)
+            'all': ('/static/css/todos.css',)
         }
 
     def res(self, obj) -> str:
