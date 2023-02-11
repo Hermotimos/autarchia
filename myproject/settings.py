@@ -263,3 +263,8 @@ INTERNAL_IPS = ['127.0.0.1', ]
 # https://stackoverflow.com/questions/16303098/django-development-server-and-mime-types/64055514#64055514
 # After editing registry - restart local server for changes to take effect
 
+
+
+
+# Default 1000 is too low for large inlines in admin
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
