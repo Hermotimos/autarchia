@@ -101,7 +101,7 @@ INSTALLED_APPS = [
 
     # imported
     # 'crispy_forms',
-    # 'debug_toolbar',
+    'debug_toolbar',
     # 'django_filters',
 
     # own
