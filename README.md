@@ -9,7 +9,7 @@
 
 # python manage.py migrate
 # python manage.py createsuperuser
-# python manage.py makemigrations polls
+# python manage.py makemigrations APPNAME
 # python manage.py migrate
 # python manage.py collectstatic (!! uncomment the right static conf in settings.py)
 # python manage.py runserver
@@ -22,12 +22,22 @@
 # enable Secrets API for the project
 
 # enter cloud console and: "gcloud config set project PROJECTNAME"
-# enter Code Editor, open new Terminal and create cd into correct dir
-# git clone your repo
+# git clone your repo (!! to the right dir !!)
+# enter Code Editor
 # create .env in GCP Code Editor and populate it with correct data
+<!-- .env, .gitignore etx. are not shown in Code Editor: see them in Terminal with "ls -al" -->
+
+# generate service account key:
+    # IAM & Admin -> Service Accounts -> choose Project -> click Email link -> click KEYS tab
+    # Add key -> Create new key -> Select JSON as the Key type -> Create
+    # https://cloud.google.com/iam/docs/creating-managing-service-account-keys
+    # add file gcp-service-account-key.json with the content of the key
+
+# open new Terminal and cd into correct dir
 # follow the steps from LOCAL (skip the first step as it should be done with git clone repo)
 # cd to where manage.py resides and: "gcloud app deploy"
 
-# generate service account key: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
-# add file gcp-service-account-key.json with the generated stuff
 
+
+
+<!-- describe permissions when connecting from project B to project's A db instance - in pA's IAM Admin create principal of the sam name as  B's main service account and grant it with Cloud SQL Client role -->

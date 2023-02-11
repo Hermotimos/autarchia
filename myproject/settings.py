@@ -246,7 +246,7 @@ else:
     # STATIC_URL = "/static/"
     # STATICFILES_DIRS = []
 
-    # STATIC_ROOT necessary oly in production (but also neede for collectstatic)
+    # STATIC_ROOT necessary only in production (but also needed for collectstatic)
     STATIC_URL = 'static/'
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
