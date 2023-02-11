@@ -11,6 +11,7 @@
 # python manage.py createsuperuser
 # python manage.py makemigrations APPNAME
 # python manage.py migrate
+# create 'static' dir
 # python manage.py collectstatic (!! uncomment the right static conf in settings.py)
 # python manage.py runserver
 
@@ -35,7 +36,8 @@
 
 # open new Terminal and cd into correct dir
 # follow the steps from LOCAL (skip the first step as it should be done with git clone repo)
-# cd to where manage.py resides and: "gcloud app deploy"
+
+# in Cloud Shell cd to where manage.py resides and: "gcloud app deploy"
 
 
 
