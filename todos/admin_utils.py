@@ -81,10 +81,9 @@ def color_ranges(colors: list) -> dict:
             break
         res[range(0 if lower == 0 else lower+1, upper+1)] = color
         lower, upper = lower + step, upper + step
-    print(res)
     return res
 
-DOS_COLORS = ["#ff0000", "#ffa700", "#2cba00", "#007000"]
+DOS_COLORS = ["#ff0000", "#ffa700", "#2cba00", "#7fff00"]
 DOS_COLOR_RANGES = color_ranges(DOS_COLORS)
 DONTA_COLORS = ["#2596be", "#2cba00", "#ECF126", "#ffa700", "#ff0000", "#21130d"]
 DONTA_COLOR_RANGES = color_ranges(DONTA_COLORS)

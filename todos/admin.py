@@ -62,7 +62,7 @@ class TODOListAdmin(admin.ModelAdmin):
             elif res < 3.1:
                 color = "deepskyblue"
             elif res < 4.1:
-                color = "indigo"
+                color = "blueviolet"
             else:
                 color = "black"
 
