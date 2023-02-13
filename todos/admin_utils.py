@@ -77,10 +77,11 @@ def color_ranges(colors: list) -> dict:
     lower, upper = 0, step
     for color in colors:
         if upper + step > 100:
-            res[range(lower+1, 100)] = color
+            res[range(lower+1, 101)] = color
             break
         res[range(0 if lower == 0 else lower+1, upper+1)] = color
         lower, upper = lower + step, upper + step
+    print(res)
     return res
 
 DOS_COLORS = ["#ff0000", "#ffa700", "#2cba00", "#007000"]
