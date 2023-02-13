@@ -71,9 +71,6 @@ def a_monthly(obj) -> int:
 # -----------------------------------------------------------------------------
 
 
-DOS = ["#ff0000", "#ffa700", "#2cba00", "#007000"]
-
-
 def color_ranges(colors: list) -> dict:
     step = int(100 / len(colors))
     res = {}
@@ -86,22 +83,23 @@ def color_ranges(colors: list) -> dict:
         lower, upper = lower + step, upper + step
     return res
 
+DOS_COLORS = ["#ff0000", "#ffa700", "#2cba00", "#007000"]
+DOS_COLOR_RANGES = color_ranges(DOS_COLORS)
+DONTA_COLORS = ["#2596be", "#2cba00", "#ECF126", "#ffa700", "#ff0000", "#21130d"]
+DONTA_COLOR_RANGES = color_ranges(DONTA_COLORS)
 
 def get_color(val: int, colors: dict) -> str:
     for val_range, code in colors.items():
         if val in val_range:
             return code
 
-
 def format_compl(value: int) -> SafeString:
     return format_html(
-        f'<b style="color: {get_color(value, color_ranges(DOS))}">{value} %</b>')
-
+        f'<b style="color: {get_color(value, DOS_COLOR_RANGES)}">{value} %</b>')
 
 def format_a(value: int) -> SafeString:
-    donts = ["#2596be", "#2cba00", "#ECF126", "#ffa700", "#ff0000", "#21130d"]
     return format_html(
-        f'<b style="color: {get_color(value, color_ranges(donts))}">{value}</b>')
+        f'<b style="color: {get_color(value, DONTA_COLOR_RANGES)}">{value}</b>')
 
 
 # -----------------------------------------------------------------------------
