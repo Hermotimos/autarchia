@@ -12,7 +12,7 @@ def get_model_by_date(obj):
             return model
 
 
-def compl_daily(obj):
+def compl_daily(obj) -> int:
     model = get_model_by_date(obj)
 
     def value(field_name) -> List[str]:
@@ -49,7 +49,7 @@ def compl_daily(obj):
 
     try:
         sum_completed = istrue_cnt() + iszero_cnt() + ismin_cnt() + isnonempty_cnt() + isoneof_cnt()
-        sum_todo = sum(len(f) for f in model.CONDITIONS.values()) - len(model.CONDITIONS['ONEOF']) + 1
+        sum_todo = sum(len(f) for f in model.CONDITIONS.values()) - len(model.CONDITIONS['ONEOF'])
         return int(round(sum_completed / sum_todo * 100, 0))
     except AttributeError:
         return 0
@@ -58,13 +58,13 @@ def compl_daily(obj):
 # -----------------------------------------------------------------------------
 
 
-def compl_monthly(obj):
+def compl_monthly(obj) -> int:
     sum_days = sum(compl_daily(day) for day in obj.days.all())
     num_days = len(obj.days.all())
     return int(sum_days / num_days)
 
 
-def a_monthly(obj):
+def a_monthly(obj) -> int:
     return sum(day.noA for day in obj.days.all())
 
 
@@ -74,7 +74,7 @@ def a_monthly(obj):
 DOS = ["#ff0000", "#ffa700", "#2cba00", "#007000"]
 
 
-def color_ranges(colors: list):
+def color_ranges(colors: list) -> dict:
     step = int(100 / len(colors))
     res = {}
     lower, upper = 0, step
@@ -87,22 +87,21 @@ def color_ranges(colors: list):
     return res
 
 
-def get_color(val, colors):
+def get_color(val: int, colors: dict) -> str:
     for val_range, code in colors.items():
         if val in val_range:
             return code
 
 
-def format_compl(value) -> SafeString:
+def format_compl(value: int) -> SafeString:
     return format_html(
         f'<b style="color: {get_color(value, color_ranges(DOS))}">{value} %</b>')
 
 
-def format_a(value) -> SafeString:
+def format_a(value: int) -> SafeString:
     donts = ["#2596be", "#2cba00", "#ECF126", "#ffa700", "#ff0000", "#21130d"]
     return format_html(
         f'<b style="color: {get_color(value, color_ranges(donts))}">{value}</b>')
-
 
 
 # -----------------------------------------------------------------------------

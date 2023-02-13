@@ -13,13 +13,13 @@ def monthdate():
 
 class Month(models.Model):
     monthdate = models.TextField(default=monthdate, primary_key=True)
-    
+
     def __str__(self):
         return self.monthdate
-        
+
     class Meta:
         ordering = ['-monthdate']
-        
+
 
 # =============================================================================
 
@@ -28,12 +28,12 @@ def thismonth():
     obj, _ = Month.objects.get_or_create(monthdate=monthdate())
     return obj.monthdate
 
-        
+
 class TODOList(models.Model):
     TODO_FIELDS = []
     INFO_FIELDS = []
     CONDITIONS = {}
-    
+
     MARKS = [
         (0, '0'),
         (1, '1'),
@@ -112,7 +112,7 @@ class TODOList2021Manager(models.Manager):
 
 class TODOList2021(TODOList):
     objects = TODOList2021Manager()
-   
+
     INFO_FIELDS = [
         'comments',
         'awareness', 'happiness', 'openness', 'focus',
@@ -139,10 +139,10 @@ class TODOList2021(TODOList):
         },
         'NONEMPTYSTR': [],
         'ONEOF': [
-             "MicroW", "Mass", "ISO", "Cardio",
+            "MicroW", "Mass", "ISO", "Cardio",
         ],
     }
-    
+
     class Meta:
         proxy = True
         verbose_name = "TODO 2021"
@@ -161,7 +161,7 @@ class TODOList2022Manager(models.Manager):
 
 class TODOList2022(TODOList2021):
     objects = TODOList2022Manager()
-   
+
     class Meta:
         proxy = True
         verbose_name = "TODO 2022"
@@ -180,7 +180,7 @@ class TODOList2023Manager(models.Manager):
 
 class TODOList2023(TODOList):
     objects = TODOList2023Manager()
-    
+
     INFO_FIELDS = [
         'comments',
         'awareness', 'happiness', 'openness', 'focus',
@@ -210,7 +210,7 @@ class TODOList2023(TODOList):
         ],
         'ONEOF': [],
     }
-    
+
     class Meta:
         ordering = ['-daydate']
         proxy = True

@@ -77,9 +77,11 @@ class TODOListAdmin(admin.ModelAdmin):
 
 @admin.register(TODOList2021)
 class TODOList2021Admin(TODOListAdmin):
+    fields = ['month', 'daydate'] + [
+        *TODOList2021.TODO_FIELDS,
+        *TODOList2021.INFO_FIELDS,
+    ]
     formfield_overrides = {
-        models.PositiveSmallIntegerField: {'widget': forms.NumberInput(attrs={'style': 'width:35px'})},
-        models.DecimalField: {'widget': forms.NumberInput(attrs={'style': 'width:55px'})},
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
     list_display = [
@@ -97,6 +99,10 @@ class TODOList2022Admin(TODOList2021Admin):
 
 @admin.register(TODOList2023)
 class TODOList2023Admin(TODOListAdmin):
+    fields = ['month', 'daydate'] + [
+        *TODOList2023.TODO_FIELDS,
+        *TODOList2023.INFO_FIELDS,
+    ]
     list_display = [
         *TODOListAdmin.ADMIN_FIELDS_1,
         *TODOList2023.TODO_FIELDS,
@@ -104,10 +110,6 @@ class TODOList2023Admin(TODOListAdmin):
         *TODOListAdmin.ADMIN_FIELDS_2,
     ]
     list_editable = [
-        *TODOList2023.TODO_FIELDS,
-        *TODOList2023.INFO_FIELDS,
-    ]
-    fields = ['month', 'daydate'] + [
         *TODOList2023.TODO_FIELDS,
         *TODOList2023.INFO_FIELDS,
     ]
