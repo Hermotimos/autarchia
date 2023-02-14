@@ -4,6 +4,8 @@ from django.apps import apps
 from django.utils.html import format_html
 from django.utils.safestring import SafeString
 
+from todos.models import TODOList2021
+
 
 def get_model_by_date(obj):
     year = str(obj.daydate).split('-')[0]
@@ -49,7 +51,10 @@ def compl_daily(obj) -> int:
 
     try:
         sum_completed = istrue_cnt() + iszero_cnt() + ismin_cnt() + isnonempty_cnt() + isoneof_cnt()
-        sum_todo = sum(len(f) for f in model.CONDITIONS.values()) - len(model.CONDITIONS['ONEOF'])
+        sum_todo = sum(len(v) for k, v in model.CONDITIONS.items() if k != 'ONEOF')
+        if obj.daydate.year in [2021, 2022]:
+            # Add 1 for 'ONEOF' conditions in years 2021 and 2022
+            sum_todo += 1
         return int(round(sum_completed / sum_todo * 100, 0))
     except AttributeError:
         return 0
@@ -59,9 +64,9 @@ def compl_daily(obj) -> int:
 
 
 def compl_monthly(obj) -> int:
-    sum_days = sum(compl_daily(day) for day in obj.days.all())
+    sum_total = sum(compl_daily(day) for day in obj.days.all())
     num_days = len(obj.days.all())
-    return int(sum_days / num_days)
+    return int(round(sum_total / num_days))
 
 
 def a_monthly(obj) -> int:
