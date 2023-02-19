@@ -3,10 +3,12 @@ from statistics import mean
 from django import forms
 from django.contrib import admin
 from django.db import models
-from django.utils.safestring import mark_safe, SafeString
+from django.utils.safestring import SafeString, mark_safe
 
-from todos.admin_utils import compl_daily, format_compl, format_a, compl_monthly, a_monthly
-from todos.models import TODOList2021, TODOList2022, TODOList2023, Food, Month
+from todos.admin_utils import (
+    a_monthly, compl_daily, compl_monthly, format_a, format_compl,
+)
+from todos.models import Food, Month, TODOList2021, TODOList2022, TODOList2023
 
 
 @admin.register(Month)
