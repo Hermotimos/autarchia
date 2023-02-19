@@ -7,6 +7,7 @@ from django.utils.safestring import SafeString, mark_safe
 
 from todos.admin_utils import (
     a_monthly, compl_daily, compl_monthly, format_a, format_compl,
+    
 )
 from todos.models import Food, Month, TODOList2021, TODOList2022, TODOList2023
 
