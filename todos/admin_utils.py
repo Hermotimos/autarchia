@@ -10,7 +10,7 @@ from todos.models import TODOList2021
 def get_model_by_date(obj):
     year = str(obj.daydate).split('-')[0]
     for model in apps.get_app_config('todos').get_models():
-        if year in model.__name__:
+        if year in model.__name__: 
             return model
 
 
