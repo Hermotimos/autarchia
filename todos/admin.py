@@ -15,7 +15,11 @@ from todos.models import Food, Month, TODOList2021, TODOList2022, TODOList2023
 
 @admin.register(Month)
 class MonthAdmin(admin.ModelAdmin):
-    list_display = ['monthdate', 'completion', 'noA']
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
+    }
+    list_display = ['monthdate', 'completion', 'noA', 'comments']
+    list_editable = ['comments']
 
     def completion(self, obj):
         try:

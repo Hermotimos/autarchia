@@ -13,6 +13,7 @@ def monthdate():
 
 class Month(models.Model):
     monthdate = models.TextField(default=monthdate, primary_key=True)
+    comments = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.monthdate
