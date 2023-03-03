@@ -1,13 +1,14 @@
 from statistics import mean
 
 from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.db import models
 from django.utils.safestring import SafeString, mark_safe
 
 from todos.admin_utils import (
     a_monthly, compl_daily, compl_monthly, format_a, format_compl,
-    
+
 )
 from todos.models import Food, Month, TODOList2021, TODOList2022, TODOList2023
 
@@ -49,7 +50,7 @@ class TODOListAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            'all': ('https://storage.googleapis.com/autarchia.appspot.com/static/css/todos.css',)
+            'all': (f'{settings.STATIC_URL}css/todos.css',)
         }
 
     def res(self, obj) -> str:
