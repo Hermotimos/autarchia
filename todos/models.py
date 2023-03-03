@@ -62,6 +62,7 @@ class TODOList(models.Model):
     # --
     flaxseed = models.BooleanField(default=False)
     spirulina = models.BooleanField(default=False)
+    greenveggies = models.BooleanField(default=False)
     lionsmane = models.BooleanField(default=False)
     pickles = models.BooleanField(default=False)
     fishoilord3 = models.BooleanField(default=False)
@@ -188,14 +189,14 @@ class TODOList2023(TODOList):
     ]
     TODO_FIELDS = [
         'SUNWALK', 'MED', 'TETRIS', 'RELAX', 'sleep', 'IForKETO',
-        'drinkfood', 'flaxseed', 'spirulina', 'lionsmane', 'pickles',
+        'drinkfood', 'flaxseed', 'greenveggies', 'lionsmane', 'pickles',
         'fishoilord3', 'water', 'coffeex2', 'noA', 'warmup', 'stretching',
         'workout', 'CODE', 'ENG', 'DE', 'FR', 'UKR',
     ]
     CONDITIONS = {
         'TRUE': [
             'SUNWALK', 'MED', 'TETRIS', 'RELAX',
-            'drinkfood', 'flaxseed', 'spirulina', 'lionsmane', 'pickles',
+            'drinkfood', 'flaxseed', 'greenveggies', 'lionsmane', 'pickles',
             'fishoilord3', 'water', 'coffeex2', 'warmup', 'stretching',
             'CODE', 'ENG', 'DE', 'FR', 'UKR',
         ],
