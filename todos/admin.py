@@ -15,6 +15,7 @@ from todos.models import Food, Month, TODOList2021, TODOList2022, TODOList2023
 
 @admin.register(Month)
 class MonthAdmin(admin.ModelAdmin):
+    date_hierarchy = 'days__daydate'
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
     }
@@ -46,6 +47,7 @@ class TODOListAdmin(admin.ModelAdmin):
     """An abstract ModelAdmin that serves as template via subclassing."""
     ADMIN_FIELDS_1 = ['daydate']
     ADMIN_FIELDS_2 = ['res', 'compl']
+    date_hierarchy = 'daydate'
     formfield_overrides = {
         models.PositiveSmallIntegerField: {'widget': forms.NumberInput(attrs={'style': 'width:35px'})},
         models.DecimalField: {'widget': forms.NumberInput(attrs={'style': 'width:55px'})},
