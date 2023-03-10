@@ -31,8 +31,12 @@ def thismonth():
 
 
 class TODOList(models.Model):
+    INFO_FIELDS = [
+        'comments',
+        'awareness', 'happiness', 'openness', 'focus',
+        'anger', 'fear', 'emptiness', 'chaos',
+    ]
     TODO_FIELDS = []
-    INFO_FIELDS = []
     CONDITIONS = {}
 
     MARKS = [
@@ -48,18 +52,31 @@ class TODOList(models.Model):
     daydate = models.DateField(default=datetime.date.today, primary_key=True)
 
     # PSYCHE
+    MILAM = models.BooleanField(default=False)
     DREAMS = models.TextField(blank=True, null=True)
     SUNWALK = models.BooleanField(default=False)
     MED = models.BooleanField(default=False)
     MED2 = models.BooleanField(default=False)
     MED3 = models.BooleanField(default=False)
+    CONTEMPL = models.BooleanField(default=False)
     TETRIS = models.BooleanField(default=False)
+    SATYR = models.BooleanField(default=False)
     RELAX = models.BooleanField(default=False)
+
+    # KHR
+    Mirroring = models.BooleanField(default=False)
+    Appreciation = models.BooleanField(default=False)
+    Helpfulness = models.BooleanField(default=False)
+    SmallTalk = models.BooleanField(default=False)
 
     # SOMA
     sleep = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     IForKETO = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     drinkfood = models.BooleanField(default=False)
+    eat1Hbeforego = models.BooleanField(default=False)
+    eatnoshit = models.BooleanField(default=False)
+    Mealx4 = models.BooleanField(default=False)
+    facecare = models.BooleanField(default=False)
     # --
     flaxseed = models.BooleanField(default=False)
     spirulina = models.BooleanField(default=False)
@@ -105,6 +122,286 @@ class TODOList(models.Model):
         ordering = ['-daydate']
 
 
+# ----------------------------------------------------
+
+
+class TODOList2016EndManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(daydate__year="2016")
+        return qs
+
+
+class TODOList2016End(TODOList):
+    objects = TODOList2016EndManager()
+
+    TODO_FIELDS = [
+        "MED2", "MED3", "SATYR", "sleep", "Mealx4", "workout",
+    ]
+    CONDITIONS = {
+        'TRUE': [
+            "MED2", "MED3", "SATYR", "Mealx4",
+        ],
+        'ZERO': [],
+        'MINIMUM': {
+            'sleep': 7,
+        },
+        'NONEMPTYSTR': [
+            'workout',
+        ],
+        'ONEOF': [],
+    }
+
+    class Meta:
+        proxy = True
+        verbose_name = "TODO 2016 (end)"
+        verbose_name_plural = "TODOs 2016 (end)"
+
+
+# ----------------------------------------------------
+
+
+class TODOList2017JanJulManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(daydate__year="2017", month__lte="2017-07")
+        return qs
+
+
+class TODOList2017JanJul(TODOList):
+    objects = TODOList2017JanJulManager()
+
+    TODO_FIELDS = [
+        "MILAM", "DREAMS", "MED", "MED2", "MED3", "SATYR", "RELAX",
+        "sleep", "spirulina", "flaxseed", "water",
+        "eat1Hbeforego", "Mealx4", "facecare",
+        "coffeex2", "noA",
+        "warmup",  "workout",
+        "ENG", "DE", "FR",
+        "Helpfulness", "SmallTalk",
+    ]
+    CONDITIONS = {
+        'TRUE': [
+            "MILAM", "MED", "MED2", "MED3", "SATYR", "RELAX",
+            "flaxseed", "spirulina", "water",
+            "eat1Hbeforego", "Mealx4", "facecare",
+            "coffeex2", "warmup",
+            "ENG", "DE", "FR",
+            "Helpfulness", "SmallTalk",
+        ],
+        'ZERO': [
+            'noA',
+        ],
+        'MINIMUM': {
+            'sleep': 7,
+        },
+        'NONEMPTYSTR': [
+            'workout', "DREAMS",
+        ],
+        'ONEOF': [],
+    }
+
+    class Meta:
+        proxy = True
+        verbose_name = "TODO 2017 Jan-Jul"
+        verbose_name_plural = "TODOs 2017 Jan-Jul"
+
+
+# ----------------------------------------------------
+
+
+class TODOList2017AugDecManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(daydate__year="2017", month__gte="2017-08")
+        return qs
+
+
+class TODOList2017AugDec(TODOList):
+    objects = TODOList2017AugDecManager()
+
+    TODO_FIELDS = [
+        "MILAM", "DREAMS", "MED", "MED2", "TETRIS", "SATYR", "RELAX",
+        "sleep",
+        "flaxseed", "spirulina", "fishoilord3",  "water",
+        "eat1Hbeforego", "Mealx4", "facecare",
+        "coffeex2", "noA",
+        "warmup",  "workout",
+        "CODE", "ENG", "DE", "FR",
+        "Helpfulness", "SmallTalk",
+    ]
+    CONDITIONS = {
+        'TRUE': [
+            "MILAM", "MED", "MED2", "TETRIS", "SATYR", "RELAX",
+            "flaxseed", "spirulina", "fishoilord3", "water",
+            "eat1Hbeforego", "Mealx4", "facecare",
+            "coffeex2", "warmup",
+            "CODE", "ENG", "DE", "FR",
+            "Helpfulness", "SmallTalk",
+        ],
+        'ZERO': [
+            'noA',
+        ],
+        'MINIMUM': {
+            'sleep': 7,
+        },
+        'NONEMPTYSTR': [
+            'workout', "DREAMS",
+        ],
+        'ONEOF': [],
+    }
+
+    class Meta:
+        proxy = True
+        verbose_name = "TODO 2017 Aug-Dec"
+        verbose_name_plural = "TODOs 2017 Aug-Dec"
+
+
+# ----------------------------------------------------
+
+
+class TODOList2018Manager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(daydate__year="2018")
+        return qs
+
+
+class TODOList2018(TODOList):
+    objects = TODOList2018Manager()
+
+    TODO_FIELDS = [
+        "MILAM", "DREAMS", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
+        "sleep", "spirulina", "fishoilord3", "water",
+        "eat1Hbeforego", "Mealx4", "facecare",
+        "coffeex2", "noA",
+        "warmup",  "workout",
+        "CODE", "ENG", "DE", "FR", "UKR",
+        "Mirroring", "Appreciation", "Helpfulness",
+    ]
+    CONDITIONS = {
+        'TRUE': [
+            "MILAM", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
+            "spirulina", "fishoilord3", "water",
+            "eat1Hbeforego", "Mealx4", "facecare",
+            "coffeex2", "warmup",
+            "CODE", "ENG", "DE", "FR", "UKR",
+            "Mirroring", "Appreciation", "Helpfulness",
+        ],
+        'ZERO': [
+            'noA',
+        ],
+        'MINIMUM': {
+            'sleep': 7,
+        },
+        'NONEMPTYSTR': [
+            'workout', "DREAMS",
+        ],
+        'ONEOF': [],
+    }
+
+    class Meta:
+        proxy = True
+        verbose_name = "TODO 2018"
+        verbose_name_plural = "TODOs 2018"
+
+
+# ----------------------------------------------------
+
+
+class TODOList2019Manager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(daydate__year="2019")
+        return qs
+
+
+class TODOList2019(TODOList):
+    objects = TODOList2019Manager()
+
+    TODO_FIELDS = [
+        "DREAMS", "MED", "MED2", "MED3", "TETRIS", "RELAX",
+        "sleep", "IForKETO",
+        "spirulina", "fishoilord3", "water", "drinkfood",
+        "eat1Hbeforego", "eatnoshit", "facecare",
+        "coffeex2", "noA",
+        "warmup", "workout",
+        "RPG", "CODE", "ENG", "DE", "FR", "UKR",
+    ]
+    CONDITIONS = {
+        'TRUE': [
+            "MED", "MED2", "MED3", "TETRIS", "RELAX",
+            "spirulina", "fishoilord3", "water", "drinkfood",
+            "eat1Hbeforego", "eatnoshit", "facecare",
+            "coffeex2", "warmup", "stretching",
+            "RPG", "CODE", "ENG", "DE", "FR", "UKR",
+        ],
+        'ZERO': [
+            'noA',
+        ],
+        'MINIMUM': {
+            'sleep': 7, 'IForKETO': 12,
+        },
+        'NONEMPTYSTR': [
+            'workout', "DREAMS",
+        ],
+        'ONEOF': [],
+    }
+
+    class Meta:
+        proxy = True
+        verbose_name = "TODO 2019"
+        verbose_name_plural = "TODOs 2019"
+
+
+# ----------------------------------------------------
+
+
+class TODOList2020Manager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(daydate__year="2020")
+        return qs
+
+
+class TODOList2020(TODOList):
+    objects = TODOList2020Manager()
+
+    TODO_FIELDS = [
+        "DREAMS", "MED", "MED2", "CONTEMPL", "TETRIS", "RELAX",
+        "sleep", "IForKETO",
+        "flaxseed", "spirulina", "fishoilord3", "water", "drinkfood", "coffeex2", "noA",
+        "warmup", "workout",
+        "RPG", "CODE", "ENG", "DE", "FR", "UKR",
+    ]
+    CONDITIONS = {
+        'TRUE': [
+            "MED", "MED2", "CONTEMPL", "TETRIS", "RELAX",
+            "flaxseed", "spirulina", "fishoilord3", "water", "drinkfood",
+            "coffeex2", "warmup",
+            "RPG", "CODE", "ENG", "DE", "FR", "UKR",
+        ],
+        'ZERO': [
+            'noA',
+        ],
+        'MINIMUM': {
+            'sleep': 7, 'IForKETO': 12,
+        },
+        'NONEMPTYSTR': [
+            'workout', "DREAMS",
+        ],
+        'ONEOF': [],
+    }
+
+    class Meta:
+        proxy = True
+        verbose_name = "TODO 2020"
+        verbose_name_plural = "TODOs 2020"
+
+
+# ----------------------------------------------------
+
+
 class TODOList2021Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
@@ -115,11 +412,6 @@ class TODOList2021Manager(models.Manager):
 class TODOList2021(TODOList):
     objects = TODOList2021Manager()
 
-    INFO_FIELDS = [
-        'comments',
-        'awareness', 'happiness', 'openness', 'focus',
-        'anger', 'fear', 'emptiness', 'chaos',
-    ]
     TODO_FIELDS = [
         "MED", "MED2", "MED3", "TETRIS", "RELAX", "sleep", "IForKETO",
         "flaxseed", "spirulina", "fishoilord3", "water", "drinkfood", "coffeex2", "noA",
@@ -183,11 +475,6 @@ class TODOList2023Manager(models.Manager):
 class TODOList2023(TODOList):
     objects = TODOList2023Manager()
 
-    INFO_FIELDS = [
-        'comments',
-        'awareness', 'happiness', 'openness', 'focus',
-        'anger', 'fear', 'emptiness', 'chaos',
-    ]
     TODO_FIELDS = [
         'SUNWALK', 'MED', 'TETRIS', 'RELAX', 'sleep', 'IForKETO',
         'drinkfood', 'flaxseed', 'greenveggies', 'lionsmane', 'pickles',

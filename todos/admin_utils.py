@@ -20,7 +20,7 @@ def compl_daily(obj) -> int:
 
     def istrue_cnt() -> int:
         return sum(
-            value(f) for f in model.CONDITIONS['TRUE']
+            value(f) is True for f in model.CONDITIONS['TRUE']
         )
 
     def iszero_cnt() -> int:
@@ -48,15 +48,20 @@ def compl_daily(obj) -> int:
     #     print(istrue_cnt(), iszero_cnt(), ismin_cnt(), isnonempty_cnt(), isoneof_cnt())
 
     try:
+        print()
+        print(obj)
         sum_completed = istrue_cnt() + iszero_cnt() + ismin_cnt() + isnonempty_cnt() + isoneof_cnt()
         sum_todo = sum(len(v) for k, v in model.CONDITIONS.items() if k != 'ONEOF')
+        print(obj, sum_completed)
         if obj.daydate.year in [2021, 2022]:
             # Add 1 for 'ONEOF' conditions in years 2021 and 2022
             sum_todo += 1
+        print(obj, sum_completed, sum_todo)
         return int(round(sum_completed / sum_todo * 100, 0))
     except AttributeError:
         return 0
-
+    # except TypeError:
+    #     return 0
 
 # -----------------------------------------------------------------------------
 
@@ -68,8 +73,10 @@ def compl_monthly(obj) -> int:
 
 
 def a_monthly(obj) -> int:
-    return sum(day.noA for day in obj.days.all())
-
+    try:
+        return sum(day.noA for day in obj.days.all())
+    except TypeError:
+        return "-"
 
 # -----------------------------------------------------------------------------
 
