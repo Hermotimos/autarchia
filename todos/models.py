@@ -173,8 +173,8 @@ class TODOList2017JanJul(TODOList):
 
     TODO_FIELDS = [
         "MILAM", "DREAMS", "MED", "MED2", "MED3", "SATYR", "RELAX",
-        "sleep", "spirulina", "flaxseed", "water",
-        "eat1Hbeforego", "Mealx4", "facecare",
+        "sleep", "facecare", "spirulina", "flaxseed", "water",
+        "eat1Hbeforego", "Mealx4", 
         "coffeex2", "noA",
         "warmup",  "workout",
         "ENG", "DE", "FR",
@@ -222,9 +222,9 @@ class TODOList2017AugDec(TODOList):
 
     TODO_FIELDS = [
         "MILAM", "DREAMS", "MED", "MED2", "TETRIS", "SATYR", "RELAX",
-        "sleep",
+        "sleep", "facecare",
         "flaxseed", "spirulina", "fishoilord3",  "water",
-        "eat1Hbeforego", "Mealx4", "facecare",
+        "eat1Hbeforego", "Mealx4",
         "coffeex2", "noA",
         "warmup",  "workout",
         "CODE", "ENG", "DE", "FR",
@@ -272,8 +272,8 @@ class TODOList2018(TODOList):
 
     TODO_FIELDS = [
         "MILAM", "DREAMS", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
-        "sleep", "spirulina", "fishoilord3", "water",
-        "eat1Hbeforego", "Mealx4", "facecare",
+        "sleep", "facecare", "spirulina", "fishoilord3", "water",
+        "eat1Hbeforego", "Mealx4",
         "coffeex2", "noA",
         "warmup",  "workout",
         "CODE", "ENG", "DE", "FR", "UKR",
@@ -321,9 +321,9 @@ class TODOList2019(TODOList):
 
     TODO_FIELDS = [
         "DREAMS", "MED", "MED2", "MED3", "TETRIS", "RELAX",
-        "sleep", "IForKETO",
+        "sleep", "facecare", "IForKETO",
         "spirulina", "fishoilord3", "water", "drinkfood",
-        "eat1Hbeforego", "eatnoshit", "facecare",
+        "eat1Hbeforego", "eatnoshit",
         "coffeex2", "noA",
         "warmup", "workout",
         "RPG", "CODE", "ENG", "DE", "FR", "UKR",
