@@ -136,11 +136,13 @@ class TODOList2016End(TODOList):
     objects = TODOList2016EndManager()
 
     TODO_FIELDS = [
-        "MED2", "MED3", "SATYR", "sleep", "Mealx4", "workout",
+        "MED2", "MED3", "SATYR",
+        "sleep", "Mealx4", "workout",
     ]
     CONDITIONS = {
         'TRUE': [
-            "MED2", "MED3", "SATYR", "Mealx4",
+            "MED2", "MED3", "SATYR",
+            "Mealx4",
         ],
         'ZERO': [],
         'MINIMUM': {
@@ -154,8 +156,8 @@ class TODOList2016End(TODOList):
 
     class Meta:
         proxy = True
-        verbose_name = "TODO 2016 (end)"
-        verbose_name_plural = "TODOs 2016 (end)"
+        verbose_name = "TODO 2016[end]"
+        verbose_name_plural = "TODOs 2016[end]"
 
 
 # ----------------------------------------------------
@@ -173,9 +175,9 @@ class TODOList2017JanJul(TODOList):
 
     TODO_FIELDS = [
         "MILAM", "DREAMS", "MED", "MED2", "MED3", "SATYR", "RELAX",
-        "sleep", "facecare", "spirulina", "flaxseed", "water",
-        "eat1Hbeforego", "Mealx4", 
-        "coffeex2", "noA",
+        "sleep", "facecare",
+        "water", "spirulina", "flaxseed",
+        "eat1Hbeforego", "Mealx4", "coffeex2", "noA",
         "warmup",  "workout",
         "ENG", "DE", "FR",
         "Helpfulness", "SmallTalk",
@@ -203,8 +205,8 @@ class TODOList2017JanJul(TODOList):
 
     class Meta:
         proxy = True
-        verbose_name = "TODO 2017 Jan-Jul"
-        verbose_name_plural = "TODOs 2017 Jan-Jul"
+        verbose_name = "TODO 2017[1] Jan-Jul"
+        verbose_name_plural = "TODOs 2017[1] Jan-Jul"
 
 
 # ----------------------------------------------------
@@ -223,9 +225,8 @@ class TODOList2017AugDec(TODOList):
     TODO_FIELDS = [
         "MILAM", "DREAMS", "MED", "MED2", "TETRIS", "SATYR", "RELAX",
         "sleep", "facecare",
-        "flaxseed", "spirulina", "fishoilord3",  "water",
-        "eat1Hbeforego", "Mealx4",
-        "coffeex2", "noA",
+        "water", "spirulina", "flaxseed", "fishoilord3",
+        "eat1Hbeforego", "Mealx4", "coffeex2", "noA",
         "warmup",  "workout",
         "CODE", "ENG", "DE", "FR",
         "Helpfulness", "SmallTalk",
@@ -253,8 +254,8 @@ class TODOList2017AugDec(TODOList):
 
     class Meta:
         proxy = True
-        verbose_name = "TODO 2017 Aug-Dec"
-        verbose_name_plural = "TODOs 2017 Aug-Dec"
+        verbose_name = "TODO 2017[2] Aug-Dec"
+        verbose_name_plural = "TODOs 2017[2] Aug-Dec"
 
 
 # ----------------------------------------------------
@@ -272,9 +273,9 @@ class TODOList2018(TODOList):
 
     TODO_FIELDS = [
         "MILAM", "DREAMS", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
-        "sleep", "facecare", "spirulina", "fishoilord3", "water",
-        "eat1Hbeforego", "Mealx4",
-        "coffeex2", "noA",
+        "sleep", "facecare",
+        "water", "spirulina", "fishoilord3",
+        "eat1Hbeforego", "Mealx4", "coffeex2", "noA",
         "warmup",  "workout",
         "CODE", "ENG", "DE", "FR", "UKR",
         "Mirroring", "Appreciation", "Helpfulness",
@@ -282,7 +283,7 @@ class TODOList2018(TODOList):
     CONDITIONS = {
         'TRUE': [
             "MILAM", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
-            "spirulina", "fishoilord3", "water",
+            "water", "spirulina", "fishoilord3",
             "eat1Hbeforego", "Mealx4", "facecare",
             "coffeex2", "warmup",
             "CODE", "ENG", "DE", "FR", "UKR",
@@ -321,10 +322,9 @@ class TODOList2019(TODOList):
 
     TODO_FIELDS = [
         "DREAMS", "MED", "MED2", "MED3", "TETRIS", "RELAX",
-        "sleep", "facecare", "IForKETO",
-        "spirulina", "fishoilord3", "water", "drinkfood",
-        "eat1Hbeforego", "eatnoshit",
-        "coffeex2", "noA",
+        "sleep", "facecare",
+        "water", "spirulina", "fishoilord3",
+        "eat1Hbeforego", "coffeex2", "noA", "eatnoshit", "IForKETO", "drinkfood",
         "warmup", "workout",
         "RPG", "CODE", "ENG", "DE", "FR", "UKR",
     ]
@@ -369,8 +369,9 @@ class TODOList2020(TODOList):
 
     TODO_FIELDS = [
         "DREAMS", "MED", "MED2", "CONTEMPL", "TETRIS", "RELAX",
-        "sleep", "IForKETO",
-        "flaxseed", "spirulina", "fishoilord3", "water", "drinkfood", "coffeex2", "noA",
+        "sleep",
+        "water", "spirulina", "fishoilord3", "flaxseed",
+        "coffeex2", "noA", "IForKETO", "drinkfood",
         "warmup", "workout",
         "RPG", "CODE", "ENG", "DE", "FR", "UKR",
     ]
@@ -413,8 +414,10 @@ class TODOList2021(TODOList):
     objects = TODOList2021Manager()
 
     TODO_FIELDS = [
-        "MED", "MED2", "MED3", "TETRIS", "RELAX", "sleep", "IForKETO",
-        "flaxseed", "spirulina", "fishoilord3", "water", "drinkfood", "coffeex2", "noA",
+        "MED", "MED2", "MED3", "TETRIS", "RELAX",
+        "sleep",
+        "water", "spirulina", "fishoilord3", "flaxseed",
+        "coffeex2", "noA", "IForKETO", "drinkfood",
         "warmup", "MicroW", "Mass", "ISO", "Cardio", "stretching",
         "RPG", "CODE", "ENG", "DE", "FR", "UKR",
     ]
@@ -476,10 +479,12 @@ class TODOList2023(TODOList):
     objects = TODOList2023Manager()
 
     TODO_FIELDS = [
-        'SUNWALK', 'MED', 'TETRIS', 'RELAX', 'sleep', 'IForKETO',
-        'drinkfood', 'flaxseed', 'greenveggies', 'lionsmane', 'pickles',
-        'fishoilord3', 'water', 'coffeex2', 'noA', 'warmup', 'stretching',
-        'workout', 'CODE', 'ENG', 'DE', 'FR', 'UKR',
+        'SUNWALK', 'MED', 'TETRIS', 'RELAX',
+        'sleep',
+        'water', 'greenveggies', 'fishoilord3', 'flaxseed', 'lionsmane', 'pickles',
+        'coffeex2', 'noA', 'IForKETO', 'drinkfood',
+        'warmup', 'workout', 'stretching',
+        'CODE', 'ENG', 'DE', 'FR', 'UKR',
     ]
     CONDITIONS = {
         'TRUE': [

@@ -44,24 +44,20 @@ def compl_daily(obj) -> int:
         return 1 if sum(1 for f in model.CONDITIONS['ONEOF'] if value(f) != "") > 0 else 0
 
     # # print(obj.daydate)
-    # if str(obj.daydate) == '2022-10-01':
-    #     print(istrue_cnt(), iszero_cnt(), ismin_cnt(), isnonempty_cnt(), isoneof_cnt())
 
     try:
-        print()
-        print(obj)
         sum_completed = istrue_cnt() + iszero_cnt() + ismin_cnt() + isnonempty_cnt() + isoneof_cnt()
         sum_todo = sum(len(v) for k, v in model.CONDITIONS.items() if k != 'ONEOF')
-        print(obj, sum_completed)
         if obj.daydate.year in [2021, 2022]:
             # Add 1 for 'ONEOF' conditions in years 2021 and 2022
             sum_todo += 1
-        print(obj, sum_completed, sum_todo)
+        # print(obj, sum_completed, sum_todo)
         return int(round(sum_completed / sum_todo * 100, 0))
     except AttributeError:
         return 0
     # except TypeError:
     #     return 0
+
 
 # -----------------------------------------------------------------------------
 
@@ -78,6 +74,7 @@ def a_monthly(obj) -> int:
     except TypeError:
         return "-"
 
+
 # -----------------------------------------------------------------------------
 
 
@@ -93,19 +90,23 @@ def color_ranges(colors: list) -> dict:
         lower, upper = lower + step, upper + step
     return res
 
+
 DOS_COLORS = ["#ff0000", "#ffa700", "#2cba00", "#7fff00"]
 DOS_COLOR_RANGES = color_ranges(DOS_COLORS)
 DONTA_COLORS = ["#2596be", "#2cba00", "#ECF126", "#ffa700", "#ff0000", "#21130d"]
 DONTA_COLOR_RANGES = color_ranges(DONTA_COLORS)
+
 
 def get_color(val: int, colors: dict) -> str:
     for val_range, code in colors.items():
         if val in val_range:
             return code
 
+
 def format_compl(value: int) -> SafeString:
     return format_html(
         f'<b style="color: {get_color(value, DOS_COLOR_RANGES)}">{value} %</b>')
+
 
 def format_a(value: int) -> SafeString:
     return format_html(
