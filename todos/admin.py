@@ -88,125 +88,146 @@ class TODOListAdmin(admin.ModelAdmin):
     def compl(self, obj) -> SafeString:
         return format_compl(compl_daily(obj))
 
+    def __init__(self, model, admin_site) -> None:
+        self.fields = [
+            'month',
+            'daydate',
+            *model.TODO_FIELDS,
+            *model.INFO_FIELDS,
+        ]
+        self.list_display = [
+            'daydate',
+            *model.TODO_FIELDS,
+            *model.INFO_FIELDS,
+            'res',
+            'compl',
+        ]
+        super().__init__(model, admin_site)
+
 
 @admin.register(TODOList2016End)
 class TODOList2016EndAdmin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2016End.TODO_FIELDS,
-        *TODOList2016End.INFO_FIELDS,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2016End.TODO_FIELDS,
+    #     *TODOList2016End.INFO_FIELDS,
+    # ]
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2016End.TODO_FIELDS,
-        *TODOList2016End.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2016End.TODO_FIELDS,
+    #     *TODOList2016End.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
+
+    # def __init__(self, model, admin_site) -> None:
+    #     print(model)
+    #     print(self.fields)
+    #     super().__init__(model, admin_site)
 
 
 @admin.register(TODOList2017JanJul)
 class TODOList2017JanJulAdmin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2017JanJul.TODO_FIELDS,
-        *TODOList2017JanJul.INFO_FIELDS,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2017JanJul.TODO_FIELDS,
+    #     *TODOList2017JanJul.INFO_FIELDS,
+    # ]
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2017JanJul.TODO_FIELDS,
-        *TODOList2017JanJul.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2017JanJul.TODO_FIELDS,
+    #     *TODOList2017JanJul.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
 
 
 @admin.register(TODOList2017AugDec)
 class TODOList2017AugDecAdmin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2017AugDec.TODO_FIELDS,
-        *TODOList2017AugDec.INFO_FIELDS,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2017AugDec.TODO_FIELDS,
+    #     *TODOList2017AugDec.INFO_FIELDS,
+    # ]
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2017AugDec.TODO_FIELDS,
-        *TODOList2017AugDec.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2017AugDec.TODO_FIELDS,
+    #     *TODOList2017AugDec.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
 
 
 
 @admin.register(TODOList2018)
 class TODOList2018Admin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2018.TODO_FIELDS,
-        *TODOList2018.INFO_FIELDS,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2018.TODO_FIELDS,
+    #     *TODOList2018.INFO_FIELDS,
+    # ]
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2018.TODO_FIELDS,
-        *TODOList2018.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2018.TODO_FIELDS,
+    #     *TODOList2018.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
 
 
 @admin.register(TODOList2019)
 class TODOList2019Admin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2019.TODO_FIELDS,
-        *TODOList2019.INFO_FIELDS,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2019.TODO_FIELDS,
+    #     *TODOList2019.INFO_FIELDS,
+    # ]
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2019.TODO_FIELDS,
-        *TODOList2019.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2019.TODO_FIELDS,
+    #     *TODOList2019.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
 
 
 @admin.register(TODOList2020)
 class TODOList2020Admin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2020.TODO_FIELDS,
-        *TODOList2020.INFO_FIELDS,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2020.TODO_FIELDS,
+    #     *TODOList2020.INFO_FIELDS,
+    # ]
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2020.TODO_FIELDS,
-        *TODOList2020.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2020.TODO_FIELDS,
+    #     *TODOList2020.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
 
 
 @admin.register(TODOList2021)
 class TODOList2021Admin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2021.TODO_FIELDS,
-        *TODOList2021.INFO_FIELDS,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2021.TODO_FIELDS,
+    #     *TODOList2021.INFO_FIELDS,
+    # ]
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 2, 'cols': 15})},
     }
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2021.TODO_FIELDS,
-        *TODOList2021.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2021.TODO_FIELDS,
+    #     *TODOList2021.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
 
 
 @admin.register(TODOList2022)
@@ -216,16 +237,16 @@ class TODOList2022Admin(TODOList2021Admin):
 
 @admin.register(TODOList2023)
 class TODOList2023Admin(TODOListAdmin):
-    fields = ['month', 'daydate'] + [
-        *TODOList2023.TODO_FIELDS,
-        *TODOList2023.INFO_FIELDS,
-    ]
-    list_display = [
-        *TODOListAdmin.ADMIN_FIELDS_1,
-        *TODOList2023.TODO_FIELDS,
-        *TODOList2023.INFO_FIELDS,
-        *TODOListAdmin.ADMIN_FIELDS_2,
-    ]
+    # fields = ['month', 'daydate'] + [
+    #     *TODOList2023.TODO_FIELDS,
+    #     *TODOList2023.INFO_FIELDS,
+    # ]
+    # list_display = [
+    #     *TODOListAdmin.ADMIN_FIELDS_1,
+    #     *TODOList2023.TODO_FIELDS,
+    #     *TODOList2023.INFO_FIELDS,
+    #     *TODOListAdmin.ADMIN_FIELDS_2,
+    # ]
     list_editable = [
         *TODOList2023.TODO_FIELDS,
         *TODOList2023.INFO_FIELDS,
