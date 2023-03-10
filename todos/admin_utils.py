@@ -4,9 +4,11 @@ from django.apps import apps
 from django.utils.html import format_html
 from django.utils.safestring import SafeString
 
+from todos.models import TODOList
+
 
 def get_model_by_date(obj):
-    year = str(obj.daydate).split('-')[0]
+    year = str(obj.date).split('-')[0]
     for model in apps.get_app_config('todos').get_models():
         if year in model.__name__:
             return model
@@ -48,7 +50,7 @@ def compl_daily(obj) -> int:
     try:
         sum_completed = istrue_cnt() + iszero_cnt() + ismin_cnt() + isnonempty_cnt() + isoneof_cnt()
         sum_todo = sum(len(v) for k, v in model.CONDITIONS.items() if k != 'ONEOF')
-        if obj.daydate.year in [2021, 2022]:
+        if obj.date.date.year in [2021, 2022]:
             # Add 1 for 'ONEOF' conditions in years 2021 and 2022
             sum_todo += 1
         # print(obj, sum_completed, sum_todo)
@@ -63,14 +65,16 @@ def compl_daily(obj) -> int:
 
 
 def compl_monthly(obj) -> int:
-    sum_total = sum(compl_daily(day) for day in obj.days.all())
-    num_days = len(obj.days.all())
+    todolists = TODOList.objects.filter(date__month=obj).select_related('date')
+    sum_total = sum(compl_daily(todolist) for todolist in todolists)
+    num_days = obj.days.count()
     return int(round(sum_total / num_days))
 
 
 def a_monthly(obj) -> int:
+    todolists = TODOList.objects.filter(date__month__monthdate=obj)
     try:
-        return sum(day.noA for day in obj.days.all())
+        return sum(todolist.noA for todolist in todolists)
     except TypeError:
         return "-"
 

@@ -11,15 +11,25 @@ from todos.admin_utils import (
 
 )
 from todos.models import (
-    Food, Month,
+    Food, Month, Day,
     TODOList2016End, TODOList2017JanJul, TODOList2017AugDec, TODOList2018,
     TODOList2019, TODOList2020, TODOList2021, TODOList2022, TODOList2023,
 )
 
 
+@admin.register(Day)
+class DayAdmin(admin.ModelAdmin):
+    date_hierarchy = 'date'
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
+    }
+    list_display = ['date', 'month', 'dreams', 'events', 'ideas']
+    list_editable = ['dreams', 'events', 'ideas']
+
+
 @admin.register(Month)
 class MonthAdmin(admin.ModelAdmin):
-    date_hierarchy = 'days__daydate'
+    date_hierarchy = 'days__date'
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
     }
@@ -38,20 +48,13 @@ class MonthAdmin(admin.ModelAdmin):
         except ZeroDivisionError:
             pass
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        qs = qs.prefetch_related('days')
-        return qs
-
 
 # ----------------------------------------------------
 
 
 class TODOListAdmin(admin.ModelAdmin):
     """An abstract ModelAdmin that serves as template via subclassing."""
-    ADMIN_FIELDS_1 = ['daydate']
-    ADMIN_FIELDS_2 = ['res', 'compl']
-    date_hierarchy = 'daydate'
+    date_hierarchy = 'date__date'
     formfield_overrides = {
         models.PositiveSmallIntegerField: {'widget': forms.NumberInput(attrs={'style': 'width:35px'})},
         models.DecimalField: {'widget': forms.NumberInput(attrs={'style': 'width:55px'})},
@@ -62,6 +65,21 @@ class TODOListAdmin(admin.ModelAdmin):
         css = {
             'all': (f'{settings.STATIC_URL}css/todos.css',)
         }
+
+    def __init__(self, model, admin_site) -> None:
+        self.fields = [
+            'date',
+            *model.TODO_FIELDS,
+            *model.INFO_FIELDS,
+        ]
+        self.list_display = [
+            'date',
+            *model.TODO_FIELDS,
+            *model.INFO_FIELDS,
+            'res',
+            'compl',
+        ]
+        super().__init__(model, admin_site)
 
     def res(self, obj) -> str:
         try:
@@ -87,22 +105,6 @@ class TODOListAdmin(admin.ModelAdmin):
 
     def compl(self, obj) -> SafeString:
         return format_compl(compl_daily(obj))
-
-    def __init__(self, model, admin_site) -> None:
-        self.fields = [
-            'month',
-            'daydate',
-            *model.TODO_FIELDS,
-            *model.INFO_FIELDS,
-        ]
-        self.list_display = [
-            'daydate',
-            *model.TODO_FIELDS,
-            *model.INFO_FIELDS,
-            'res',
-            'compl',
-        ]
-        super().__init__(model, admin_site)
 
 
 @admin.register(TODOList2016End)

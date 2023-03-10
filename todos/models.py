@@ -11,15 +11,24 @@ def monthdate():
     return f"{y}-{m}"
 
 
+class MonthManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.prefetch_related('days') # less queries, but slower (GCP cheaper)
+        return qs
+
+
 class Month(models.Model):
+    objects = MonthManager()
+
     monthdate = models.TextField(default=monthdate, primary_key=True)
     comments = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return self.monthdate
-
     class Meta:
         ordering = ['-monthdate']
+
+    def __str__(self):
+        return self.monthdate
 
 
 # =============================================================================
@@ -28,6 +37,39 @@ class Month(models.Model):
 def thismonth():
     obj, _ = Month.objects.get_or_create(monthdate=monthdate())
     return obj.monthdate
+
+
+class DayManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.select_related('month')
+        return qs
+
+
+class Day(models.Model):
+    objects = DayManager()
+
+    date = models.DateField(default=datetime.date.today, primary_key=True)
+    month = models.ForeignKey(
+        Month, related_name="days", default=thismonth, on_delete=models.PROTECT)
+    dreams = models.TextField(blank=True, null=True)
+    events = models.TextField(blank=True, null=True)
+    ideas = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __str__(self):
+        return str(self.date)
+
+
+
+# =============================================================================
+
+
+def thisday():
+    obj, _ = Day.objects.get_or_create(date=str(datetime.date.today()))
+    return obj.date
 
 
 class TODOList(models.Model):
@@ -48,8 +90,9 @@ class TODOList(models.Model):
         (5, '5'),
     ]
 
-    month = models.ForeignKey(to=Month, on_delete=models.PROTECT, related_name="days", default=thismonth)
-    daydate = models.DateField(default=datetime.date.today, primary_key=True)
+    date = models.OneToOneField(
+        Day, related_name="todolist", default=thisday, on_delete=models.PROTECT,
+        primary_key=True)
 
     # PSYCHE
     MILAM = models.BooleanField(default=False)
@@ -119,7 +162,7 @@ class TODOList(models.Model):
     comments = models.TextField(blank=True, null=True)
 
     class Meta:
-        ordering = ['-daydate']
+        ordering = ['-date__date']
 
 
 # ----------------------------------------------------
@@ -128,7 +171,7 @@ class TODOList(models.Model):
 class TODOList2016EndManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2016")
+        qs = qs.filter(date__date__year="2016")
         return qs
 
 
@@ -166,7 +209,7 @@ class TODOList2016End(TODOList):
 class TODOList2017JanJulManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2017", month__lte="2017-07")
+        qs = qs.filter(date__date__year="2017", date__date__month__lte="07")
         return qs
 
 
@@ -215,7 +258,7 @@ class TODOList2017JanJul(TODOList):
 class TODOList2017AugDecManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2017", month__gte="2017-08")
+        qs = qs.filter(date__date__year="2017", date__date__month__gte="08")
         return qs
 
 
@@ -264,7 +307,7 @@ class TODOList2017AugDec(TODOList):
 class TODOList2018Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2018")
+        qs = qs.filter(date__date__year="2018")
         return qs
 
 
@@ -313,7 +356,7 @@ class TODOList2018(TODOList):
 class TODOList2019Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2019")
+        qs = qs.filter(date__date__year="2019")
         return qs
 
 
@@ -360,7 +403,7 @@ class TODOList2019(TODOList):
 class TODOList2020Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2020")
+        qs = qs.filter(date__date__year="2020")
         return qs
 
 
@@ -406,7 +449,7 @@ class TODOList2020(TODOList):
 class TODOList2021Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2021")
+        qs = qs.filter(date__date__year="2021")
         return qs
 
 
@@ -452,7 +495,7 @@ class TODOList2021(TODOList):
 class TODOList2022Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2022")
+        qs = qs.filter(date__date__year="2022")
         return qs
 
 
@@ -471,7 +514,7 @@ class TODOList2022(TODOList2021):
 class TODOList2023Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(daydate__year="2023")
+        qs = qs.filter(date__date__year="2023")
         return qs
 
 
@@ -506,7 +549,7 @@ class TODOList2023(TODOList):
     }
 
     class Meta:
-        ordering = ['-daydate']
+        ordering = ['-date__date']
         proxy = True
         verbose_name = "TODO 2023"
         verbose_name_plural = "TODOs 2023"
@@ -535,11 +578,11 @@ class Food(models.Model):
 
 
 # class DailyServings(models.Model):
-#     daydate = models.DateField(default=datetime.date.today, unique=True)
+#     date = models.DateField(default=datetime.date.today, unique=True)
 #     servings = models.ManyToManyField(to=Serving)
 
 #     class Meta:
-#         ordering = ['-daydate']
+#         ordering = ['-date']
 
 # from django.contrib.contenttypes.models import ContentType
 # content_type = ContentType.objects.filter(model=c_type)
