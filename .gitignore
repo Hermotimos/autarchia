@@ -26,6 +26,7 @@ media
 _local_snippets/
 _db_saves/
 dumped_*
+data_migration_sql/
 
 PyCharm_ReferenceCard.pdf
 
