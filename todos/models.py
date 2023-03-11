@@ -203,6 +203,12 @@ class TODOList2016End(TODOList):
         verbose_name_plural = "TODOs 2016[end]"
 
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._meta.get_field('MED2').verbose_name = 'DoNothing'
+        self._meta.get_field('MED3').verbose_name = 'Awareness'
+
+
 # ----------------------------------------------------
 
 
@@ -251,6 +257,12 @@ class TODOList2017JanJul(TODOList):
         verbose_name = "TODO 2017[1] Jan-Jul"
         verbose_name_plural = "TODOs 2017[1] Jan-Jul"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._meta.get_field('MED').verbose_name = 'Mindfulness'
+        self._meta.get_field('MED2').verbose_name = 'Contemplation'
+        self._meta.get_field('MED3').verbose_name = 'Awareness'
+
 
 # ----------------------------------------------------
 
@@ -266,7 +278,7 @@ class TODOList2017AugDec(TODOList):
     objects = TODOList2017AugDecManager()
 
     TODO_FIELDS = [
-        "MILAM", "DREAMS", "MED", "MED2", "TETRIS", "SATYR", "RELAX",
+        "MILAM", "DREAMS", "MED", "MED3", "TETRIS", "SATYR", "RELAX",
         "sleep", "facecare",
         "water", "spirulina", "flaxseed", "fishoilord3",
         "eat1Hbeforego", "Mealx4", "coffeex2", "noA",
@@ -276,7 +288,7 @@ class TODOList2017AugDec(TODOList):
     ]
     CONDITIONS = {
         'TRUE': [
-            "MILAM", "MED", "MED2", "TETRIS", "SATYR", "RELAX",
+            "MILAM", "MED", "MED3", "TETRIS", "SATYR", "RELAX",
             "flaxseed", "spirulina", "fishoilord3", "water",
             "eat1Hbeforego", "Mealx4", "facecare",
             "coffeex2", "warmup",
@@ -299,6 +311,11 @@ class TODOList2017AugDec(TODOList):
         proxy = True
         verbose_name = "TODO 2017[2] Aug-Dec"
         verbose_name_plural = "TODOs 2017[2] Aug-Dec"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._meta.get_field('MED').verbose_name = 'Mindfulness'
+        self._meta.get_field('MED3').verbose_name = 'Awareness'
 
 
 # ----------------------------------------------------
