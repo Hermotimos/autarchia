@@ -4,6 +4,9 @@ from django import forms
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
+from django.urls import reverse
+from django.utils.html import format_html
+from django.utils.http import urlencode
 from django.utils.safestring import SafeString, mark_safe
 
 from todos.admin_utils import (
@@ -33,7 +36,7 @@ class MonthAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
     }
-    list_display = ['monthdate', 'completion', 'noA', 'comments']
+    list_display = ['monthdate', 'show_todos', 'completion', 'noA', 'comments']
     list_editable = ['comments']
 
     def completion(self, obj):
@@ -47,6 +50,27 @@ class MonthAdmin(admin.ModelAdmin):
             return format_a(a_monthly(obj))
         except ZeroDivisionError:
             pass
+
+    @admin.display(description="TODO List")
+    def show_todos(self, obj):
+        year, month = obj.monthdate.split('-')
+
+        if year == "2016":
+            affix = "2016end"
+        elif year == "2017" and month in ['01', '02', '03', '04', '05', '06', '07']:
+            affix = "2017janjul"
+        elif year == "2017" and month in ['08', '09', '10', '11', '12']:
+            affix = "2017augdec"
+        else:
+            affix = year
+
+        url = (
+            reverse(f"admin:todos_todolist{affix}_changelist")
+            + "?"
+            + urlencode({"todolist__date__month": f"{obj.monthdate}"})
+        )
+        html = '<a href="{}" style="border: 1px solid; padding: 2px 3px;" target="_blank">Show TODOs</a>'
+        return format_html(html, url)
 
 
 # ----------------------------------------------------
@@ -74,6 +98,7 @@ class TODOListAdmin(admin.ModelAdmin):
         ]
         self.list_display = [
             'date',
+            'go_to_day',
             *model.TODO_FIELDS,
             *model.INFO_FIELDS,
             'res',
@@ -105,6 +130,16 @@ class TODOListAdmin(admin.ModelAdmin):
 
     def compl(self, obj) -> SafeString:
         return format_compl(compl_daily(obj))
+
+    @admin.display(description="Go To Day")
+    def go_to_day(self, obj):
+        url = (
+            reverse("admin:todos_day_changelist")
+            + "?"
+            + urlencode({"todolist__date": f"{obj.date}"})
+        )
+        html = '<a href="{}" style="border: 1px solid; padding: 2px 3px;" target="_blank">GO</a>'
+        return format_html(html, url)
 
 
 @admin.register(TODOList2016End)

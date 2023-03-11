@@ -96,7 +96,7 @@ class TODOList(models.Model):
 
     # PSYCHE
     MILAM = models.BooleanField(default=False)
-    DREAMS = models.TextField(blank=True, null=True)
+    DREAM = models.BooleanField(default=False)
     SUNWALK = models.BooleanField(default=False)
     MED = models.BooleanField(default=False)
     MED2 = models.BooleanField(default=False)
@@ -222,7 +222,7 @@ class TODOList2017JanJul(TODOList):
     objects = TODOList2017JanJulManager()
 
     TODO_FIELDS = [
-        "MILAM", "DREAMS", "MED", "MED2", "MED3", "SATYR", "RELAX",
+        "MILAM", "DREAM", "MED", "MED2", "MED3", "SATYR", "RELAX",
         "sleep", "facecare",
         "water", "spirulina", "flaxseed",
         "eat1Hbeforego", "Mealx4", "coffeex2", "noA",
@@ -232,7 +232,7 @@ class TODOList2017JanJul(TODOList):
     ]
     CONDITIONS = {
         'TRUE': [
-            "MILAM", "MED", "MED2", "MED3", "SATYR", "RELAX",
+            "MILAM", "DREAM", "MED", "MED2", "MED3", "SATYR", "RELAX",
             "flaxseed", "spirulina", "water",
             "eat1Hbeforego", "Mealx4", "facecare",
             "coffeex2", "warmup",
@@ -246,7 +246,7 @@ class TODOList2017JanJul(TODOList):
             'sleep': 7,
         },
         'NONEMPTYSTR': [
-            'workout', "DREAMS",
+            'workout',
         ],
         'ONEOF': [],
     }
@@ -277,7 +277,7 @@ class TODOList2017AugDec(TODOList):
     objects = TODOList2017AugDecManager()
 
     TODO_FIELDS = [
-        "MILAM", "DREAMS", "MED", "MED3", "TETRIS", "SATYR", "RELAX",
+        "MILAM", "DREAM", "MED", "MED3", "TETRIS", "SATYR", "RELAX",
         "sleep", "facecare",
         "water", "spirulina", "flaxseed", "fishoilord3",
         "eat1Hbeforego", "Mealx4", "coffeex2", "noA",
@@ -287,7 +287,7 @@ class TODOList2017AugDec(TODOList):
     ]
     CONDITIONS = {
         'TRUE': [
-            "MILAM", "MED", "MED3", "TETRIS", "SATYR", "RELAX",
+            "MILAM", "DREAM", "MED", "MED3", "TETRIS", "SATYR", "RELAX",
             "flaxseed", "spirulina", "fishoilord3", "water",
             "eat1Hbeforego", "Mealx4", "facecare",
             "coffeex2", "warmup",
@@ -301,7 +301,7 @@ class TODOList2017AugDec(TODOList):
             'sleep': 7,
         },
         'NONEMPTYSTR': [
-            'workout', "DREAMS",
+            'workout',
         ],
         'ONEOF': [],
     }
@@ -331,7 +331,7 @@ class TODOList2018(TODOList):
     objects = TODOList2018Manager()
 
     TODO_FIELDS = [
-        "MILAM", "DREAMS", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
+        "MILAM", "DREAM", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
         "sleep", "facecare",
         "water", "spirulina", "fishoilord3",
         "eat1Hbeforego", "Mealx4", "coffeex2", "noA",
@@ -341,7 +341,7 @@ class TODOList2018(TODOList):
     ]
     CONDITIONS = {
         'TRUE': [
-            "MILAM", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
+            "MILAM", "DREAM", "MED", "MED2", "MED3", "TETRIS", "SATYR", "RELAX",
             "water", "spirulina", "fishoilord3",
             "eat1Hbeforego", "Mealx4", "facecare",
             "coffeex2", "warmup",
@@ -355,7 +355,7 @@ class TODOList2018(TODOList):
             'sleep': 7,
         },
         'NONEMPTYSTR': [
-            'workout', "DREAMS",
+            'workout',
         ],
         'ONEOF': [],
     }
@@ -386,7 +386,7 @@ class TODOList2019(TODOList):
     objects = TODOList2019Manager()
 
     TODO_FIELDS = [
-        "DREAMS", "MED", "MED2", "MED3", "TETRIS", "RELAX",
+        "DREAM", "MED", "MED2", "MED3", "TETRIS", "RELAX",
         "sleep", "facecare",
         "water", "spirulina", "fishoilord3",
         "eat1Hbeforego", "coffeex2", "noA", "eatnoshit", "IForKETO", "drinkfood",
@@ -395,7 +395,7 @@ class TODOList2019(TODOList):
     ]
     CONDITIONS = {
         'TRUE': [
-            "MED", "MED2", "MED3", "TETRIS", "RELAX",
+            "DREAM", "MED", "MED2", "MED3", "TETRIS", "RELAX",
             "spirulina", "fishoilord3", "water", "drinkfood",
             "eat1Hbeforego", "eatnoshit", "facecare",
             "coffeex2", "warmup", "stretching",
@@ -408,7 +408,7 @@ class TODOList2019(TODOList):
             'sleep': 7, 'IForKETO': 12,
         },
         'NONEMPTYSTR': [
-            'workout', "DREAMS",
+            'workout',
         ],
         'ONEOF': [],
     }
@@ -439,7 +439,7 @@ class TODOList2020(TODOList):
     objects = TODOList2020Manager()
 
     TODO_FIELDS = [
-        "DREAMS", "MED", "MED2", "MED3", "TETRIS", "RELAX",
+        "DREAM", "MED", "MED2", "MED3", "TETRIS", "RELAX",
         "sleep",
         "water", "spirulina", "fishoilord3", "flaxseed",
         "coffeex2", "noA", "IForKETO", "drinkfood",
@@ -448,7 +448,7 @@ class TODOList2020(TODOList):
     ]
     CONDITIONS = {
         'TRUE': [
-            "MED", "MED2", "MED3", "TETRIS", "RELAX",
+            "DREAM", "MED", "MED2", "MED3", "TETRIS", "RELAX",
             "flaxseed", "spirulina", "fishoilord3", "water", "drinkfood",
             "coffeex2", "warmup",
             "RPG", "CODE", "ENG", "DE", "FR", "UKR",
@@ -460,7 +460,7 @@ class TODOList2020(TODOList):
             'sleep': 7, 'IForKETO': 12,
         },
         'NONEMPTYSTR': [
-            'workout', "DREAMS",
+            'workout',
         ],
         'ONEOF': [],
     }
