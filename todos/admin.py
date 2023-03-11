@@ -54,12 +54,13 @@ class MonthAdmin(admin.ModelAdmin):
     @admin.display(description="TODO List")
     def show_todos(self, obj):
         year, month = obj.monthdate.split('-')
+        year, month = int(year), int(month)
 
-        if year == "2016":
+        if year == 2016:
             affix = "2016end"
-        elif year == "2017" and month in ['01', '02', '03', '04', '05', '06', '07']:
+        elif year == 2017 and month in [1, 2, 3, 4, 5, 6, 7]:
             affix = "2017janjul"
-        elif year == "2017" and month in ['08', '09', '10', '11', '12']:
+        elif year == 2017 and month in [8, 9, 10, 11, 12]:
             affix = "2017augdec"
         else:
             affix = year
@@ -67,9 +68,11 @@ class MonthAdmin(admin.ModelAdmin):
         url = (
             reverse(f"admin:todos_todolist{affix}_changelist")
             + "?"
-            + urlencode({"todolist__date__month": f"{obj.monthdate}"})
+            + urlencode({f"date__date__month": month})
+            + "&"
+            + urlencode({f"date__date__year": year})
         )
-        html = '<a href="{}" style="border: 1px solid; padding: 2px 3px;" target="_blank">Show TODOs</a>'
+        html = '<a href="{}" style="border: 1px solid; padding: 2px 3px;" target="_blank">Month TODOs</a>'
         return format_html(html, url)
 
 
