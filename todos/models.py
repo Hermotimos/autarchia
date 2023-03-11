@@ -101,7 +101,6 @@ class TODOList(models.Model):
     MED = models.BooleanField(default=False)
     MED2 = models.BooleanField(default=False)
     MED3 = models.BooleanField(default=False)
-    CONTEMPL = models.BooleanField(default=False)
     TETRIS = models.BooleanField(default=False)
     SATYR = models.BooleanField(default=False)
     RELAX = models.BooleanField(default=False)
@@ -366,6 +365,12 @@ class TODOList2018(TODOList):
         verbose_name = "TODO 2018"
         verbose_name_plural = "TODOs 2018"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._meta.get_field('MED').verbose_name = 'Mindfulness'
+        self._meta.get_field('MED2').verbose_name = 'FOCUS'
+        self._meta.get_field('MED3').verbose_name = 'Awareness'
+
 
 # ----------------------------------------------------
 
@@ -413,6 +418,12 @@ class TODOList2019(TODOList):
         verbose_name = "TODO 2019"
         verbose_name_plural = "TODOs 2019"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._meta.get_field('MED').verbose_name = 'Mindfulness'
+        self._meta.get_field('MED2').verbose_name = 'FOCUS'
+        self._meta.get_field('MED3').verbose_name = 'DoNothing'
+
 
 # ----------------------------------------------------
 
@@ -428,7 +439,7 @@ class TODOList2020(TODOList):
     objects = TODOList2020Manager()
 
     TODO_FIELDS = [
-        "DREAMS", "MED", "MED2", "CONTEMPL", "TETRIS", "RELAX",
+        "DREAMS", "MED", "MED2", "MED3", "TETRIS", "RELAX",
         "sleep",
         "water", "spirulina", "fishoilord3", "flaxseed",
         "coffeex2", "noA", "IForKETO", "drinkfood",
@@ -437,7 +448,7 @@ class TODOList2020(TODOList):
     ]
     CONDITIONS = {
         'TRUE': [
-            "MED", "MED2", "CONTEMPL", "TETRIS", "RELAX",
+            "MED", "MED2", "MED3", "TETRIS", "RELAX",
             "flaxseed", "spirulina", "fishoilord3", "water", "drinkfood",
             "coffeex2", "warmup",
             "RPG", "CODE", "ENG", "DE", "FR", "UKR",
@@ -458,6 +469,12 @@ class TODOList2020(TODOList):
         proxy = True
         verbose_name = "TODO 2020"
         verbose_name_plural = "TODOs 2020"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._meta.get_field('MED').verbose_name = 'Mindfulness'
+        self._meta.get_field('MED2').verbose_name = 'FOCUS'
+        self._meta.get_field('MED3').verbose_name = 'Contemplation'
 
 
 # ----------------------------------------------------
@@ -504,6 +521,12 @@ class TODOList2021(TODOList):
         proxy = True
         verbose_name = "TODO 2021"
         verbose_name_plural = "TODOs 2021"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._meta.get_field('MED').verbose_name = 'FOCUS'
+        self._meta.get_field('MED2').verbose_name = 'Mindfulness'
+        self._meta.get_field('MED3').verbose_name = 'FOCUS'
 
 
 # ----------------------------------------------------
