@@ -14,7 +14,7 @@ def monthdate():
 class MonthManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.prefetch_related('days') # less queries, but slower (GCP cheaper)
+        qs = qs.prefetch_related('days') # less queries, but slower (GCP cheaper ?)
         return qs
 
 
