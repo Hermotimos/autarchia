@@ -2,6 +2,7 @@ from statistics import mean
 
 from django import forms
 from django.contrib import admin
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html
@@ -96,7 +97,7 @@ class TODOListAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            'all': ('todos.css',)
+            'all': (f'{settings.STATIC_URL}css/todos.css',)
         }
 
     def __init__(self, model, admin_site) -> None:
