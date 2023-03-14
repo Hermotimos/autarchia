@@ -1,7 +1,6 @@
 from statistics import mean
 
 from django import forms
-from django.conf import settings
 from django.contrib import admin
 from django.db import models
 from django.urls import reverse
@@ -39,12 +38,19 @@ class MonthAdmin(admin.ModelAdmin):
     list_display = ['monthdate', 'show_todos', 'completion', 'noA', 'comments']
     list_editable = ['comments']
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.prefetch_related('days__todolist')
+        return qs
+
+    @admin.display
     def completion(self, obj):
         try:
             return format_compl(compl_monthly(obj))
         except ZeroDivisionError:
             pass
 
+    @admin.display
     def noA(self, obj):
         try:
             return format_a(a_monthly(obj))
@@ -90,7 +96,7 @@ class TODOListAdmin(admin.ModelAdmin):
 
     class Media:
         css = {
-            'all': (f'{settings.STATIC_URL}css/todos.css',)
+            'all': ('todos.css',)
         }
 
     def __init__(self, model, admin_site) -> None:

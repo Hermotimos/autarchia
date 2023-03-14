@@ -4,7 +4,7 @@ from django.apps import apps
 from django.utils.html import format_html
 from django.utils.safestring import SafeString
 
-from todos.models import TODOList
+from todos.models import TODOList, Month, Day
 
 
 def get_model_by_date(obj):
@@ -64,17 +64,19 @@ def compl_daily(obj) -> int:
 # -----------------------------------------------------------------------------
 
 
-def compl_monthly(obj) -> int:
-    todolists = TODOList.objects.filter(date__month=obj).select_related('date')
-    sum_total = sum(compl_daily(todolist) for todolist in todolists)
+def _month_todolists(obj: Month) -> list[TODOList]:
+    return [day.todolist for day in obj.days.all()]
+
+
+def compl_monthly(obj: Month) -> int:
+    sum_total = sum(compl_daily(todolist) for todolist in _month_todolists(obj))
     num_days = obj.days.count()
     return int(round(sum_total / num_days))
 
 
-def a_monthly(obj) -> int:
-    todolists = TODOList.objects.filter(date__month__monthdate=obj)
+def a_monthly(obj: Month) -> int:
     try:
-        return sum(todolist.noA for todolist in todolists)
+        return sum(todolist.noA for todolist in _month_todolists(obj))
     except TypeError:
         return "-"
 
