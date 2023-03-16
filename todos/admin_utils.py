@@ -1,3 +1,4 @@
+from functools import cache
 from typing import List
 
 from django.apps import apps
@@ -109,11 +110,13 @@ def get_color(val: int, colors: dict) -> str:
             return code
 
 
+@cache
 def format_compl(value: int) -> SafeString:
     return format_html(
         f'<b style="color: {get_color(value, DOS_COLOR_RANGES)}">{value} %</b>')
 
 
+@cache
 def format_a(value: int) -> SafeString:
     return format_html(
         f'<b style="color: {get_color(value, DONTA_COLOR_RANGES)}">{value}</b>')
