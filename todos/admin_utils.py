@@ -15,10 +15,10 @@ def get_model_by_date(obj):
             return model
 
 
-def compl_daily(obj) -> int:
+def compl_daily(obj: Day) -> int:
     model = get_model_by_date(obj)
 
-    def value(field_name) -> List[str]:
+    def value(field_name: str) -> List[str]:
         return getattr(obj, field_name)
 
     def istrue_cnt() -> int:
