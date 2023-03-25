@@ -595,6 +595,31 @@ class TODOList2023(TODOList):
         verbose_name_plural = "TODOs 2023"
 
 
+# ----------------------------------------------------
+
+"""
+If nothing changes from year to year, the following code is enough to
+create a new-year's model. Admin is created and registered automatically.
+--> subclass previous year's model
+--> change class names, filter, and verbose_name - as per current year's date
+"""
+
+# class TODOList2022Manager(models.Manager):
+#     def get_queryset(self):
+#         qs = super().get_queryset()
+#         qs = qs.filter(date__date__year="2022")
+#         return qs
+
+
+# class TODOList2022(TODOList2021):
+#     objects = TODOList2022Manager()
+
+#     class Meta:
+#         proxy = True
+#         verbose_name = "TODO 2022"
+#         verbose_name_plural = "TODOs 2022"
+
+
 # =============================================================================
 
 

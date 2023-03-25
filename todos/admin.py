@@ -1,23 +1,23 @@
+import datetime
 from statistics import mean
 
 from django import forms
-from django.contrib import admin
+from django.apps import apps
 from django.conf import settings
+from django.contrib import admin
+from django.contrib.admin.sites import AlreadyRegistered
 from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.safestring import SafeString, mark_safe
 
-from todos.admin_utils import (
-    a_monthly, compl_daily, compl_monthly, format_a, format_compl,
-
-)
-from todos.models import (
-    Food, Month, Day,
-    TODOList2016End, TODOList2017JanJul, TODOList2017AugDec, TODOList2018,
-    TODOList2019, TODOList2020, TODOList2021, TODOList2022, TODOList2023,
-)
+from todos.admin_utils import (a_monthly, compl_daily, compl_monthly, format_a,
+                               format_compl)
+from todos.models import Food, Month, Day
+#     TODOList2016End, TODOList2017JanJul, TODOList2017AugDec, TODOList2018,
+#     TODOList2019, TODOList2020, TODOList2021, TODOList2022, TODOList2023,
+# )
 
 
 @admin.register(Day)
@@ -152,52 +152,72 @@ class TODOListAdmin(admin.ModelAdmin):
         return format_html(html, url)
 
 
-@admin.register(TODOList2016End)
-class TODOList2016EndAdmin(TODOListAdmin):
-    pass
+"""
+Automatically register all TODOList[year] proxy models.
+Add 'list_editable' attribute only in the current year's TODOList.
+
+This ensures that by simply creating another a proxy models for the 'new' year
+will be enough to start using it.
+"""
+app_models = apps.get_app_config('todos').get_models()
+for TODOModel in filter(lambda a: 'TODO' in str(a) and a._meta.proxy, app_models):
+    try:
+        class_dict = {}
+        if str(datetime.date.today().year) in str(TODOModel):
+            class_dict = {
+                'list_editable': [
+                    *TODOModel.TODO_FIELDS,
+                    *TODOModel.INFO_FIELDS,
+                ]
+            }
+        admin_cls = type(f'{TODOModel.__name__}Admin', (TODOListAdmin,), class_dict)
+        admin.site.register(TODOModel, admin_cls)
+    except AlreadyRegistered:
+        pass
 
 
-@admin.register(TODOList2017JanJul)
-class TODOList2017JanJulAdmin(TODOListAdmin):
-    pass
+
+# @admin.register(TODOList2016End)
+# class TODOList2016EndAdmin(TODOListAdmin):
+#     pass
 
 
-@admin.register(TODOList2017AugDec)
-class TODOList2017AugDecAdmin(TODOListAdmin):
-    pass
+# @admin.register(TODOList2017JanJul)
+# class TODOList2017JanJulAdmin(TODOListAdmin):
+#     pass
 
 
-@admin.register(TODOList2018)
-class TODOList2018Admin(TODOListAdmin):
-    pass
+# @admin.register(TODOList2017AugDec)
+# class TODOList2017AugDecAdmin(TODOListAdmin):
+#     pass
 
 
-@admin.register(TODOList2019)
-class TODOList2019Admin(TODOListAdmin):
-    pass
+# @admin.register(TODOList2018)
+# class TODOList2018Admin(TODOListAdmin):
+#     pass
 
 
-@admin.register(TODOList2020)
-class TODOList2020Admin(TODOListAdmin):
-    pass
+# @admin.register(TODOList2019)
+# class TODOList2019Admin(TODOListAdmin):
+#     pass
 
 
-@admin.register(TODOList2021)
-class TODOList2021Admin(TODOListAdmin):
-    pass
+# @admin.register(TODOList2020)
+# class TODOList2020Admin(TODOListAdmin):
+#     pass
 
 
-@admin.register(TODOList2022)
-class TODOList2022Admin(TODOListAdmin):
-    pass
+# @admin.register(TODOList2022)
+# class TODOList2022Admin(TODOListAdmin):
+#     pass
 
-
-@admin.register(TODOList2023)
-class TODOList2023Admin(TODOListAdmin):
-    list_editable = [
-        *TODOList2023.TODO_FIELDS,
-        *TODOList2023.INFO_FIELDS,
-    ]
+# print(TODOList2022Admin, TODOList2022Admin.__bases__)
+# @admin.register(TODOList2023)
+# class TODOList2023Admin(TODOListAdmin):
+#     list_editable = [
+#         *TODOList2023.TODO_FIELDS,
+#         *TODOList2023.INFO_FIELDS,
+#     ]
 
 
 # ----------------------------------------------------
