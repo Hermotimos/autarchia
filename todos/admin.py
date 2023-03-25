@@ -12,27 +12,36 @@ from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.safestring import SafeString, mark_safe
 
-from todos.admin_utils import (a_monthly, compl_daily, compl_monthly, format_a,
-                               format_compl)
-from todos.models import Food, Month, Day
-#     TODOList2016End, TODOList2017JanJul, TODOList2017AugDec, TODOList2018,
-#     TODOList2019, TODOList2020, TODOList2021, TODOList2022, TODOList2023,
-# )
+from todos.admin_utils import (
+    a_monthly, compl_daily, compl_monthly, format_a, format_compl,
+)
+from todos.models import Year, Month, Day, Food
+
+
+
+@admin.register(Year)
+class YearAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
+    }
+    list_display = ['yeardate', 'comments']
+    list_editable = ['comments']
+
 
 
 @admin.register(Day)
 class DayAdmin(admin.ModelAdmin):
-    date_hierarchy = 'date'
+    date_hierarchy = 'daydate'
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
     }
-    list_display = ['date', 'month', 'dreams', 'events', 'ideas']
+    list_display = ['daydate', 'month', 'dreams', 'events', 'ideas']
     list_editable = ['dreams', 'events', 'ideas']
 
 
 @admin.register(Month)
 class MonthAdmin(admin.ModelAdmin):
-    date_hierarchy = 'days__date'
+    date_hierarchy = 'days__daydate'
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(attrs={'rows': 3, 'cols': 50})},
     }
@@ -42,6 +51,7 @@ class MonthAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         qs = qs.prefetch_related('days__todolist')
+        qs = qs.select_related('year')
         return qs
 
     @admin.display
@@ -75,9 +85,9 @@ class MonthAdmin(admin.ModelAdmin):
         url = (
             reverse(f"admin:todos_todolist{affix}_changelist")
             + "?"
-            + urlencode({f"date__date__month": month})
+            + urlencode({f"daydate__daydate__month": month})
             + "&"
-            + urlencode({f"date__date__year": year})
+            + urlencode({f"daydate__date__year": year})
         )
         html = '<a href="{}" style="border: 1px solid; padding: 2px 3px;" target="_blank">Month TODOs</a>'
         return format_html(html, url)
@@ -88,7 +98,7 @@ class MonthAdmin(admin.ModelAdmin):
 
 class TODOListAdmin(admin.ModelAdmin):
     """An abstract ModelAdmin that serves as template via subclassing."""
-    date_hierarchy = 'date__date'
+    date_hierarchy = 'date__daydate'
     formfield_overrides = {
         models.PositiveSmallIntegerField: {'widget': forms.NumberInput(attrs={'style': 'width:35px'})},
         models.DecimalField: {'widget': forms.NumberInput(attrs={'style': 'width:55px'})},

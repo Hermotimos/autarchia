@@ -6,9 +6,42 @@ from django.db import models
 # =============================================================================
 
 
+def yeardate():
+    y, _, _ = str(datetime.date.today()).split('-')
+    return str(y)
+
+
+class YearManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.prefetch_related('months') # less queries, but slower (GCP cheaper ?)
+        return qs
+
+
+class Year(models.Model):
+    objects = YearManager()
+
+    yeardate = models.TextField(default=yeardate, primary_key=True)
+    comments = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-yeardate']
+
+    def __str__(self):
+        return self.yeardate
+
+
+# =============================================================================
+
+
 def monthdate():
     y, m, _ = str(datetime.date.today()).split('-')
     return f"{y}-{m}"
+
+
+def thisyear():
+    obj, _ = Year.objects.get_or_create(yeardate=yeardate())
+    return obj.yeardate
 
 
 class MonthManager(models.Manager):
@@ -22,6 +55,8 @@ class Month(models.Model):
     objects = MonthManager()
 
     monthdate = models.TextField(default=monthdate, primary_key=True)
+    year = models.ForeignKey(
+        Year, related_name='months', default=thisyear, on_delete=models.PROTECT)
     comments = models.TextField(blank=True, null=True)
 
     class Meta:
@@ -49,7 +84,7 @@ class DayManager(models.Manager):
 class Day(models.Model):
     objects = DayManager()
 
-    date = models.DateField(default=datetime.date.today, primary_key=True)
+    daydate = models.DateField(default=datetime.date.today, primary_key=True)
     month = models.ForeignKey(
         Month, related_name="days", default=thismonth, on_delete=models.PROTECT)
     dreams = models.TextField(blank=True, null=True)
@@ -57,10 +92,10 @@ class Day(models.Model):
     ideas = models.TextField(blank=True, null=True)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['-daydate']
 
     def __str__(self):
-        return str(self.date)
+        return str(self.daydate)
 
 
 
@@ -68,8 +103,8 @@ class Day(models.Model):
 
 
 def thisday():
-    obj, _ = Day.objects.get_or_create(date=str(datetime.date.today()))
-    return obj.date
+    obj, _ = Day.objects.get_or_create(daydate=str(datetime.date.today()))
+    return obj.daydate
 
 
 class TODOList(models.Model):
@@ -161,7 +196,7 @@ class TODOList(models.Model):
     comments = models.TextField(blank=True, null=True)
 
     class Meta:
-        ordering = ['-date__date']
+        ordering = ['-date__daydate']
 
 
 # ----------------------------------------------------
@@ -170,7 +205,7 @@ class TODOList(models.Model):
 class TODOList2016EndManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2016")
+        qs = qs.filter(date__daydate__year="2016")
         return qs
 
 
@@ -214,7 +249,9 @@ class TODOList2016End(TODOList):
 class TODOList2017JanJulManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2017", date__date__month__lte="07")
+        qs = qs.filter(
+            date__daydate__year="2017",
+            date__daydate__month__lte="07")
         return qs
 
 
@@ -269,7 +306,9 @@ class TODOList2017JanJul(TODOList):
 class TODOList2017AugDecManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2017", date__date__month__gte="08")
+        qs = qs.filter(
+            date__daydate__year="2017",
+            date__daydate__month__gte="08")
         return qs
 
 
@@ -323,7 +362,7 @@ class TODOList2017AugDec(TODOList):
 class TODOList2018Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2018")
+        qs = qs.filter(date__daydate__year="2018")
         return qs
 
 
@@ -378,7 +417,7 @@ class TODOList2018(TODOList):
 class TODOList2019Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2019")
+        qs = qs.filter(date__daydate__year="2019")
         return qs
 
 
@@ -431,7 +470,7 @@ class TODOList2019(TODOList):
 class TODOList2020Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2020")
+        qs = qs.filter(date__daydate__year="2020")
         return qs
 
 
@@ -483,7 +522,7 @@ class TODOList2020(TODOList):
 class TODOList2021Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2021")
+        qs = qs.filter(date__daydate__year="2021")
         return qs
 
 
@@ -535,7 +574,7 @@ class TODOList2021(TODOList):
 class TODOList2022Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2022")
+        qs = qs.filter(date__daydate__year="2022")
         return qs
 
 
@@ -554,7 +593,7 @@ class TODOList2022(TODOList2021):
 class TODOList2023Manager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(date__date__year="2023")
+        qs = qs.filter(date__daydate__year="2023")
         return qs
 
 
@@ -589,7 +628,7 @@ class TODOList2023(TODOList):
     }
 
     class Meta:
-        ordering = ['-date__date']
+        ordering = ['-date__daydate']
         proxy = True
         verbose_name = "TODO 2023"
         verbose_name_plural = "TODOs 2023"
@@ -607,7 +646,7 @@ create a new-year's model. Admin is created and registered automatically.
 # class TODOList2022Manager(models.Manager):
 #     def get_queryset(self):
 #         qs = super().get_queryset()
-#         qs = qs.filter(date__date__year="2022")
+#         qs = qs.filter(date__daydate__year="2022")
 #         return qs
 
 

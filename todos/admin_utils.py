@@ -8,14 +8,14 @@ from django.utils.safestring import SafeString
 from todos.models import TODOList, Month, Day
 
 
-def get_model_by_date(obj):
+def get_model_by_date(obj: TODOList):
     year = str(obj.date).split('-')[0]
     for model in apps.get_app_config('todos').get_models():
         if year in model.__name__:
             return model
 
 
-def compl_daily(obj: Day) -> int:
+def compl_daily(obj: TODOList) -> int:
     model = get_model_by_date(obj)
 
     def value(field_name: str) -> List[str]:
@@ -51,7 +51,7 @@ def compl_daily(obj: Day) -> int:
     try:
         sum_completed = istrue_cnt() + iszero_cnt() + ismin_cnt() + isnonempty_cnt() + isoneof_cnt()
         sum_todo = sum(len(v) for k, v in model.CONDITIONS.items() if k != 'ONEOF')
-        if obj.date.date.year in [2021, 2022]:
+        if obj.date.daydate.year in [2021, 2022]:
             # Add 1 for 'ONEOF' conditions in years 2021 and 2022
             sum_todo += 1
         # print(obj, sum_completed, sum_todo)
