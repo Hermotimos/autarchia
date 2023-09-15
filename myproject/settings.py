@@ -205,8 +205,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'pl'
 pl_formats.DATE_FORMAT = "Y-m-d"
 TIME_ZONE = 'Europe/Warsaw'
-USE_I18N = True
-USE_L10N = True
+USE_I18N = True     # translation of admin pages
+USE_L10N = True     # date format
 USE_TZ = True
 
 
