@@ -85,9 +85,9 @@ class MonthAdmin(admin.ModelAdmin):
         url = (
             reverse(f"admin:todos_todolist{affix}_changelist")
             + "?"
-            + urlencode({f"daydate__daydate__month": month})
+            + urlencode({f"date__daydate__month": month})
             + "&"
-            + urlencode({f"daydate__date__year": year})
+            + urlencode({f"date__daydate__year": year})
         )
         html = '<a href="{}" style="border: 1px solid; padding: 2px 3px;" target="_blank">Month TODOs</a>'
         return format_html(html, url)
